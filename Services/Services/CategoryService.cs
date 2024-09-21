@@ -18,6 +18,7 @@ namespace Services.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Category?> GetCategoryByIdIncludeAsync(int id) => await _unitOfWork.CategoryRepository.GetCategoryByIdIncludeAsync(id);
         public async Task<Category?> GetByIdIncludeAsync(int id)
         {
             return await _unitOfWork.CategoryRepository.GetByIdIncludeAsync(id, p => p.Products);

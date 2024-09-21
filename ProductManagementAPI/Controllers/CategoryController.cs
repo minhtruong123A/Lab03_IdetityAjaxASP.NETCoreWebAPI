@@ -1,4 +1,6 @@
 ﻿using BusinessObjects;
+using BusinessObjects.Dtos.Categories;
+using BusinessObjects.Dtos.Products;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Services;
@@ -6,7 +8,7 @@ using Services.Services;
 namespace ProductManagementAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/2024_09_21/categories")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -17,78 +19,168 @@ namespace ProductManagementAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
+        public async Task<ActionResult<IEnumerable<GetCategoryDto>>> GetAllCategories(int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _categoryService.GetAllAsync();
-            return Ok(products);
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0) pageSize = 10;
+
+            var categories = await _categoryService.GetAllAsync();
+            var mapCategories = categories.Select(category => new GetCategoryDto
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName,
+            }).ToList();
+            var totalCategories = mapCategories.Count();
+            int totalPages = (int)Math.Ceiling(totalCategories / (double)pageSize);
+            var paginatedCategories = mapCategories
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var paginationMetadata = new
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                TotalProducts = totalCategories
+            };
+
+            return Ok(new
+            {
+                Products = paginatedCategories,
+                Pagination = paginationMetadata
+            });
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategoryById(int id)
+        public async Task<ActionResult<GetCategoryDto>> GetCategoryById(int id)
         {
-            var product = await _categoryService.GetByIdAsync(id);
-            if (product == null)
+            var category = await _categoryService.GetByIdAsync(id);
+            if (category == null)
+                return NotFound(new { Message = $"Category with ID {id} not found." });
+
+            var mapCategory = new GetCategoryDto
             {
-                return NotFound();
-            }
-            return Ok(product);
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName,
+            };
+
+            return Ok(mapCategory);
         }
-
-        //[HttpGet("Include")]
-        //public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsWithInclude()
-        //{
-        //    var products = await _categoryService.GetAllIncludeAsync();
-        //    return Ok(products);
-        //}
-
-        //[HttpGet("Include/{id}")]
-        //public async Task<ActionResult<Product>> GetProductByIdWithInclude(int id)
-        //{
-        //    var product = await _categoryService.GetByIdIncludeAsync(id);
-
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(product);
-        //}
 
         [HttpPost]
-        public async Task<ActionResult<Category>> AddCategory([FromBody] Category category)
+        public async Task<IActionResult> AddCategory([FromQuery] AddCategoryDto category)
         {
             if (category == null)
-            {
-                return BadRequest();
-            }
+                return BadRequest(new { Message = $"Please fill in field." });
 
-            var createdProduct = await _categoryService.AddAsync(category);
-            return CreatedAtAction(nameof(GetCategoryById), new { id = createdProduct.CategoryId }, createdProduct);
+            var categoryModel = new Category
+            {
+                CategoryName = category.CategoryName
+            };
+
+            await _categoryService.AddAsync(categoryModel);
+            return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody] Category category)
+        [HttpPut]
+        public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryDto category)
         {
-            if (category == null || id != category.CategoryId)
-            {
-                return BadRequest();
-            }
+            if (category == null)
+                return BadRequest(new { Message = $"Please fill in field." });
 
-            await _categoryService.UpdateAsync(category);
+            var p = await _categoryService.GetByIdAsync(category.CategoryId);
+            if (p == null)
+                return NotFound(new { Message = $"Category with ID {category.CategoryId} not found." });
+
+            if (!string.IsNullOrEmpty(category.CategoryName))
+                p.CategoryName = category.CategoryName;
+
+            await _categoryService.UpdateAsync(p);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _categoryService.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            var category = await _categoryService.GetByIdAsync(id);
+            if (category == null)
+                return NotFound(new { Message = $"Category with ID {id} not found." });
 
             await _categoryService.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("Include")]
+        public async Task<ActionResult<IEnumerable<GetCategoryIncludeDto>>> GetAllCategoriesWithInclude(int pageNumber = 1, int pageSize = 10)
+        {
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0) pageSize = 10;
+
+            var categories = await _categoryService.GetAllIncludeAsync();
+            var mapCategories = categories.Select(category => new GetCategoryIncludeDto
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName,
+                Products = category.Products != null
+                    ? category.Products.Select(product => new GetProductDto
+                    {
+                        ProductId = product.ProductId,
+                        ProductName = product.ProductName,
+                        CategoryId = product.CategoryId,
+                        UnitsInStock = product.UnitsInStock,
+                        UnitPrice = product.UnitPrice
+                    }).ToList()
+                    : new List<GetProductDto>()
+            }).ToList();
+            var totalCategories = mapCategories.Count();
+            int totalPages = (int)Math.Ceiling(totalCategories / (double)pageSize);
+            var paginatedCategories = mapCategories
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var paginationMetadata = new
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                TotalCategories = totalCategories
+            };
+
+            return Ok(new
+            {
+                Categories = paginatedCategories,
+                Pagination = paginationMetadata
+            });
+        }
+
+        [HttpGet("Include/{id}")]
+        public async Task<ActionResult<GetCategoryIncludeDto>> GetCategoryByIdWithInclude(int id)
+        {
+            var category = await _categoryService.GetCategoryByIdIncludeAsync(id);
+
+            if (category == null)
+                return NotFound(new { Message = $"Category with ID {id} not found." });
+
+            var mapCategory = new GetCategoryIncludeDto
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName,
+                Products = category.Products != null
+                    ? category.Products.Select(product => new GetProductDto
+                    {
+                        ProductId = product.ProductId,
+                        ProductName = product.ProductName,
+                        CategoryId = product.CategoryId,
+                        UnitsInStock = product.UnitsInStock,
+                        UnitPrice = product.UnitPrice
+                    }).ToList()
+                    : new List<GetProductDto>()
+            };
+
+            return Ok(mapCategory);
+        }
+
     }
 }

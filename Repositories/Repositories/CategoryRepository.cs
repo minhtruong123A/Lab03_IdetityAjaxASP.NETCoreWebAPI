@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,13 @@ namespace Repositories.Repositories
     {
         public CategoryRepository(ProductStoreContext context) : base(context)
         {
+        }
+
+        public async Task<Category?> GetCategoryByIdIncludeAsync(int id)
+        {
+            return await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
         }
     }
 }

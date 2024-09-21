@@ -9,6 +9,7 @@ namespace Services.Interfaces
 {
     public interface ICategoryService
     {
+        Task<Category?> GetCategoryByIdIncludeAsync(int id);
         Task<Category?> GetByIdIncludeAsync(int id);
         Task<IEnumerable<Category>> GetAllIncludeAsync();
         Task<Category?> GetByIdAsync(int id);
