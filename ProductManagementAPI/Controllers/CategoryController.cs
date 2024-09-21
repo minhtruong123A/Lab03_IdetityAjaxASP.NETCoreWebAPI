@@ -123,15 +123,14 @@ namespace ProductManagementAPI.Controllers
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
                 Products = category.Products != null
-                    ? category.Products.Select(product => new GetProductDto
+                    ? category.Products.Select(product => new GetCategoryWithProductsDto
                     {
                         ProductId = product.ProductId,
                         ProductName = product.ProductName,
-                        CategoryId = product.CategoryId,
                         UnitsInStock = product.UnitsInStock,
                         UnitPrice = product.UnitPrice
                     }).ToList()
-                    : new List<GetProductDto>()
+                    : new List<GetCategoryWithProductsDto>()
             }).ToList();
             var totalCategories = mapCategories.Count();
             int totalPages = (int)Math.Ceiling(totalCategories / (double)pageSize);
@@ -168,15 +167,14 @@ namespace ProductManagementAPI.Controllers
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
                 Products = category.Products != null
-                    ? category.Products.Select(product => new GetProductDto
+                    ? category.Products.Select(product => new GetCategoryWithProductsDto
                     {
                         ProductId = product.ProductId,
                         ProductName = product.ProductName,
-                        CategoryId = product.CategoryId,
                         UnitsInStock = product.UnitsInStock,
                         UnitPrice = product.UnitPrice
                     }).ToList()
-                    : new List<GetProductDto>()
+                    : new List<GetCategoryWithProductsDto>()
             };
 
             return Ok(mapCategory);

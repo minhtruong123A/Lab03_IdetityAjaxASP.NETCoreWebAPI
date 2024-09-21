@@ -13,6 +13,6 @@ namespace BusinessObjects.Dtos.Categories
 
         public string CategoryName { get; set; } = null!;
 
-        public ICollection<GetProductDto> Products { get; set; } = [];
+        public ICollection<GetCategoryWithProductsDto> Products { get; set; } = [];
     }
 }
