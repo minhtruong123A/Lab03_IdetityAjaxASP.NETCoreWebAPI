@@ -8,7 +8,7 @@ using Services.Services;
 namespace ProductManagementAPI.Controllers
 {
     [ApiController]
-    [Route("api/2024_09_21/categories")]
+    [Route("api/2024-09-21/categories")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -111,7 +111,7 @@ namespace ProductManagementAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet("Include")]
+        [HttpGet("include")]
         public async Task<ActionResult<IEnumerable<GetCategoryIncludeDto>>> GetAllCategoriesWithInclude(int pageNumber = 1, int pageSize = 10)
         {
             if (pageNumber <= 0) pageNumber = 1;
@@ -155,7 +155,7 @@ namespace ProductManagementAPI.Controllers
             });
         }
 
-        [HttpGet("Include/{id}")]
+        [HttpGet("include/{id}")]
         public async Task<ActionResult<GetCategoryIncludeDto>> GetCategoryByIdWithInclude(int id)
         {
             var category = await _categoryService.GetCategoryByIdIncludeAsync(id);

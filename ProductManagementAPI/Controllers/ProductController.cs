@@ -7,7 +7,7 @@ using Services.Interfaces;
 namespace ProductManagementAPI.Controllers
 {
     [ApiController]
-    [Route("api/2024_09_21/products")]
+    [Route("api/2024-09-21/products")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -76,7 +76,7 @@ namespace ProductManagementAPI.Controllers
             return Ok(mapProducts);
         }
 
-        [HttpGet("Include")]
+        [HttpGet("include")]
         public async Task<ActionResult<IEnumerable<GetProductsIncludeDto>>> GetAllProductsWithInclude(int pageNumber = 1, int pageSize = 10)
         {
             if (pageNumber <= 0) pageNumber = 1;
@@ -117,7 +117,7 @@ namespace ProductManagementAPI.Controllers
             });
         }
 
-        [HttpGet("Include/{id}")]
+        [HttpGet("include/{id}")]
         public async Task<ActionResult<GetProductsIncludeDto>> GetProductByIdWithInclude(int id)
         {
             var product = await _productService.GetByIdIncludeAsync(id);
