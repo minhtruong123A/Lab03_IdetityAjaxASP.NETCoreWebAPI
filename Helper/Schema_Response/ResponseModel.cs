@@ -5,11 +5,11 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Helper
+namespace Helper.Schema_Response
 {
     public class ResponseModel<T>
     {
-        [JsonPropertyName("success")]
+        [JsonPropertyName("status")]
         public bool Success { get; set; }
 
         [JsonPropertyName("data")]

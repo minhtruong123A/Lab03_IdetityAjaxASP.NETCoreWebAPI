@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Helper.Interfaces
+namespace Helper.Unit_Of_Works.Interfaces
 {
     public interface IUnitOfWork
     {

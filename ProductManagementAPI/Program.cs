@@ -1,6 +1,6 @@
 using BusinessObjects;
-using Helper.Interfaces;
-using Helper.UnitOfWorks;
+using Helper.Unit_Of_Works.Interfaces;
+using Helper.Unit_Of_Works.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

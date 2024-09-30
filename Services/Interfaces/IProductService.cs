@@ -1,6 +1,6 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Dtos.Products;
-using Helper;
+using Helper.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;

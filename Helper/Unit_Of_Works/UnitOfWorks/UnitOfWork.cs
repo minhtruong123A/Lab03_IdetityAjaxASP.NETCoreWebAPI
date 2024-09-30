@@ -1,5 +1,5 @@
 ﻿using BusinessObjects;
-using Helper.Interfaces;
+using Helper.Unit_Of_Works.Interfaces;
 using Repositories.Repositories;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Helper.UnitOfWorks
+namespace Helper.Unit_Of_Works.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork
     {

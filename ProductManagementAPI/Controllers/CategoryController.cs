@@ -1,6 +1,8 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Dtos.Categories;
 using Helper;
+using Helper.Pagination;
+using Helper.Schema_Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;

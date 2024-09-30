@@ -1,8 +1,8 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Dtos.Categories;
 using BusinessObjects.Dtos.Products;
-using Helper;
-using Helper.Interfaces;
+using Helper.Pagination;
+using Helper.Unit_Of_Works.Interfaces;
 using Services.Interfaces;
 
 namespace Services.Services
