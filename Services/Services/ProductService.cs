@@ -40,12 +40,42 @@ namespace Services.Services
         }
 
         //Get All Include
-        public async Task<PaginatedResult<GetProductsIncludeDto>> GetAllIncludeAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<PaginatedResult<GetProductsIncludeDto>> GetAllIncludeAsync(
+                     string? nameFilter = null,
+                     int? categoryIdFilter = null,
+                     int? unitsInStockFilter = null,
+                     decimal? unitPriceFilter = null,
+                     List<int>? productIds = null,
+                     int pageNumber = 1,
+                     int pageSize = 10)
         {
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0) pageSize = 10;
 
             var products = await _unitOfWork.ProductRepository.GetAllIncludeAsync(p => p.Category);
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                products = products.Where(product =>
+                    product.ProductName.Contains(nameFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (categoryIdFilter.HasValue)
+            {
+                products = products.Where(product => product.CategoryId == categoryIdFilter.Value);
+            }
+            if (unitsInStockFilter.HasValue)
+            {
+                products = products.Where(product => product.UnitsInStock == unitsInStockFilter.Value);
+            }
+            if (unitPriceFilter.HasValue)
+            {
+                products = products.Where(product => product.UnitPrice == unitPriceFilter.Value);
+            }
+            if (productIds != null && productIds.Any())
+            {
+                products = products.Where(product => productIds.Contains(product.ProductId));
+            }
+
             var mapProducts = products.Select(product => new GetProductsIncludeDto
             {
                 ProductId = product.ProductId,
@@ -89,14 +119,44 @@ namespace Services.Services
                 UnitPrice = product.UnitPrice,
             };
         }
-        
+
         //Get All
-        public async Task<PaginatedResult<GetProductDto>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<PaginatedResult<GetProductDto>> GetAllAsync(
+                     string? nameFilter = null,
+                     int? categoryIdFilter = null,
+                     int? unitsInStockFilter = null,
+                     decimal? unitPriceFilter = null,
+                     List<int>? productIds = null,
+                     int pageNumber = 1,
+                     int pageSize = 10)
         {
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0) pageSize = 10;
 
             var products = await _unitOfWork.ProductRepository.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                products = products.Where(product =>
+                    product.ProductName.Contains(nameFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (categoryIdFilter.HasValue)
+            {
+                products = products.Where(product => product.CategoryId == categoryIdFilter.Value);
+            }
+            if (unitsInStockFilter.HasValue)
+            {
+                products = products.Where(product => product.UnitsInStock == unitsInStockFilter.Value);
+            }
+            if (unitPriceFilter.HasValue)
+            {
+                products = products.Where(product => product.UnitPrice == unitPriceFilter.Value);
+            }
+            if (productIds != null && productIds.Any())
+            {
+                products = products.Where(product => productIds.Contains(product.ProductId));
+            }
+
             var mapProducts = products.Select(product => new GetProductDto
             {
                 ProductId = product.ProductId,
@@ -121,7 +181,7 @@ namespace Services.Services
                 PageSize = pageSize
             };
         }
-        
+
         //Add
         public async Task<Product> AddAsync(AddProductDto entity)
         {

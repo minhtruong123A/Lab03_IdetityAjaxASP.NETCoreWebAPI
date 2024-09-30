@@ -13,9 +13,17 @@ namespace Services.Interfaces
     {
         Task<GetCategoryIncludeDto?> GetCategoryByIdIncludeAsync(int id);
         Task<Category?> GetByIdIncludeAsync(int id);
-        Task<PaginatedResult<GetCategoryIncludeDto>> GetAllIncludeAsync(int pageNumber = 1, int pageSize = 10);
+        Task<PaginatedResult<GetCategoryIncludeDto>> GetAllIncludeAsync(
+                    string? nameFilter = null,
+                    List<int>? categoryIds = null,
+                    int pageNumber = 1,
+                    int pageSize = 10);
         Task<GetCategoryDto?> GetByIdAsync(int id);
-        Task<PaginatedResult<GetCategoryDto>> GetAllAsync(int pageNumber = 1, int pageSize = 10);
+        Task<PaginatedResult<GetCategoryDto>> GetAllAsync(
+                    string? nameFilter = null,
+                    List<int>? categoryIds = null,
+                    int pageNumber = 1,
+                    int pageSize = 10);
         Task<Category> AddAsync(AddCategoryDto entity);
         Task UpdateAsync(UpdateCategoryDto entity);
         Task DeleteAsync(int id);

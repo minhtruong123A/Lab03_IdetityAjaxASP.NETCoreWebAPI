@@ -4,11 +4,6 @@ using BusinessObjects.Dtos.Products;
 using Helper;
 using Helper.Interfaces;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Services
 {
@@ -48,12 +43,27 @@ namespace Services.Services
 
 
         //Get All Include
-        public async Task<PaginatedResult<GetCategoryIncludeDto>> GetAllIncludeAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<PaginatedResult<GetCategoryIncludeDto>> GetAllIncludeAsync(
+                    string? nameFilter = null,
+                    List<int>? categoryIds = null,
+                    int pageNumber = 1,
+                    int pageSize = 10)
         {
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0) pageSize = 10;
 
             var categories = await _unitOfWork.CategoryRepository.GetAllIncludeAsync(c => c.Products);
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                categories = categories.Where(category =>
+                    category.CategoryName.Contains(nameFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (categoryIds != null && categoryIds.Any())
+            {
+                categories = categories.Where(category => categoryIds.Contains(category.CategoryId));
+            }
+
             var mapCategories = categories.Select(category => new GetCategoryIncludeDto
             {
                 CategoryId = category.CategoryId,
@@ -75,7 +85,8 @@ namespace Services.Services
                 .Take(pageSize)
                 .ToList();
 
-            return new PaginatedResult<GetCategoryIncludeDto>{
+            return new PaginatedResult<GetCategoryIncludeDto>
+            {
                 Items = paginatedCategories,
                 TotalCount = totalCategories,
                 TotalPages = totalPages,
@@ -83,6 +94,7 @@ namespace Services.Services
                 PageSize = pageSize
             };
         }
+
 
         //Get By Id
         public async Task<GetCategoryDto?> GetByIdAsync(int id)
@@ -97,12 +109,27 @@ namespace Services.Services
         }
 
         //Get All
-        public async Task<PaginatedResult<GetCategoryDto>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<PaginatedResult<GetCategoryDto>> GetAllAsync(
+                    string? nameFilter = null,
+                    List<int>? categoryIds = null,
+                    int pageNumber = 1,
+                    int pageSize = 10)
         {
             if (pageNumber <= 0) pageNumber = 1;
             if (pageSize <= 0) pageSize = 10;
 
             var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                categories = categories.Where(category =>
+                    category.CategoryName.Contains(nameFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (categoryIds != null && categoryIds.Any())
+            {
+                categories = categories.Where(category => categoryIds.Contains(category.CategoryId));
+            }
+
             var mapCategories = categories.Select(category => new GetCategoryDto
             {
                 CategoryId = category.CategoryId,
