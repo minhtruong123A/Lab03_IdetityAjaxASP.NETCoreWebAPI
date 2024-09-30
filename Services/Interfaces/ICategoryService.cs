@@ -1,4 +1,6 @@
 ﻿using BusinessObjects;
+using BusinessObjects.Dtos.Categories;
+using Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +11,13 @@ namespace Services.Interfaces
 {
     public interface ICategoryService
     {
-        Task<Category?> GetCategoryByIdIncludeAsync(int id);
+        Task<GetCategoryIncludeDto?> GetCategoryByIdIncludeAsync(int id);
         Task<Category?> GetByIdIncludeAsync(int id);
-        Task<IEnumerable<Category>> GetAllIncludeAsync();
-        Task<Category?> GetByIdAsync(int id);
-        Task<IEnumerable<Category>> GetAllAsync();
-        Task<Category> AddAsync(Category entity);
-        Task UpdateAsync(Category entity);
+        Task<PaginatedResult<GetCategoryIncludeDto>> GetAllIncludeAsync(int pageNumber = 1, int pageSize = 10);
+        Task<GetCategoryDto?> GetByIdAsync(int id);
+        Task<PaginatedResult<GetCategoryDto>> GetAllAsync(int pageNumber = 1, int pageSize = 10);
+        Task<Category> AddAsync(AddCategoryDto entity);
+        Task UpdateAsync(UpdateCategoryDto entity);
         Task DeleteAsync(int id);
     }
 }
