@@ -46,6 +46,20 @@ namespace Helper.UnitOfWorks
             }
         }
 
+        private UserRepository userRepository;
+        public UserRepository UserRepository
+        {
+            get
+            {
+                if (userRepository == null)
+                {
+                    userRepository = new UserRepository(_storeContext);
+                }
+
+                return userRepository;
+            }
+        }
+
         public async Task SaveChangesAsync()
         {
             await _storeContext.SaveChangesAsync();

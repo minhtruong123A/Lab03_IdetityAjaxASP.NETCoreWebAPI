@@ -2,6 +2,7 @@
 using BusinessObjects.Dtos.Categories;
 using BusinessObjects.Dtos.Products;
 using Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Services;
@@ -10,6 +11,7 @@ namespace ProductManagementAPI.Controllers
 {
     [ApiController]
     [Route("api/2024-09-21/products")]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -17,6 +19,13 @@ namespace ProductManagementAPI.Controllers
         public ProductController(IProductService productService)
         {
             _productService = productService;
+        }
+
+        [HttpGet("public-info")]
+        [AllowAnonymous]
+        public IActionResult GetPublicInfo()
+        {
+            return Ok("This is public information.");
         }
 
         [HttpGet]

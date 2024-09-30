@@ -86,5 +86,10 @@ namespace Repositories.Repositories
             var entity = await GetByIdAsync(id);
             return entity != null;
         }
+
+        public IQueryable<T> GetAllAsQueryable()
+        {
+            return _context.Set<T>().AsQueryable();
+        }
     }
 }

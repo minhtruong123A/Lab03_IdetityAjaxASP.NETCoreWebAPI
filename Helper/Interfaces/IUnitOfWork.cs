@@ -12,6 +12,7 @@ namespace Helper.Interfaces
     {
         public ProductRepository ProductRepository { get; }
         public CategoryRepository CategoryRepository { get; }
+        public UserRepository UserRepository { get; }
         Task SaveChangesAsync();
     }
 }

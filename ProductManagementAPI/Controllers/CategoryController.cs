@@ -1,6 +1,7 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Dtos.Categories;
 using Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
@@ -8,6 +9,7 @@ namespace ProductManagementAPI.Controllers
 {
     [ApiController]
     [Route("api/2024-09-21/categories")]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -15,6 +17,13 @@ namespace ProductManagementAPI.Controllers
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
+        }
+
+        [HttpGet("public-info")]
+        [AllowAnonymous]
+        public IActionResult GetPublicInfo()
+        {
+            return Ok("This is public information.");
         }
 
         [HttpGet]
