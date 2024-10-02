@@ -91,5 +91,32 @@ namespace Repositories.Repositories
         {
             return _context.Set<T>().AsQueryable();
         }
+
+        public async Task<List<T>> GetAllWithParamAsync(string queryParam)
+        {
+            IQueryable<T> query = _dbSet;
+            switch (queryParam.ToLower())
+            {
+                case "tracking":
+                    break;
+
+                case "notracking":
+                    query = query.AsNoTracking();
+                    break;
+
+                case "sync":
+                    return query.ToList();
+
+                case "async":
+                    return await query.ToListAsync();
+
+                case "paginated":
+                    return await query.Take(10).ToListAsync();
+
+                default:
+                    return await query.ToListAsync();
+            }
+            return await query.ToListAsync();
+        }
     }
 }

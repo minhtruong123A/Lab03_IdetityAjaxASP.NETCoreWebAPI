@@ -14,5 +14,6 @@ namespace Repositories.Interfaces
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
         IQueryable<T> GetAllAsQueryable();
+        Task<List<T>> GetAllWithParamAsync(string queryParam);
     }
 }
