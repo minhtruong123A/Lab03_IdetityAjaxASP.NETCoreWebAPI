@@ -1,5 +1,4 @@
 ﻿using BusinessObjects.Dtos.Users;
-using Helper;
 using Helper.Schema_Response;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
@@ -12,29 +11,14 @@ namespace ProductManagementAPI.Controllers
     {
         private readonly IAuthService _authService;
 
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-        }
+        public AuthController(IAuthService authService) => _authService = authService;
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto loginModel)
         {
             var token = await _authService.Authenticate(loginModel.Username, loginModel.Password);
-
-            if (token == null)
-                return Unauthorized(new ResponseModel<string>
-                {
-                    Success = false,
-                    Error = "Invalid username or password",
-                    ErrorCode = 401
-                });
-
-            return Ok(new ResponseModel<string>
-            {
-                Success = true,
-                Data = token
-            });
+            return token == null ? Unauthorized(new ResponseModel<string> { Success = false, Error = "Invalid username or password", ErrorCode = 401 })
+                                 : Ok(new ResponseModel<string> { Success = true, Data = token });
         }
     }
 }
