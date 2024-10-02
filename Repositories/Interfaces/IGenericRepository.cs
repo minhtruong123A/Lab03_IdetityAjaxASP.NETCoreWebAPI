@@ -18,6 +18,6 @@ namespace Repositories.Interfaces
             Expression<Func<T, bool>> filter = null, Expression<Func<T, TResult>> select = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             int? skip = null,
-            int? take = null
+            int? take = null);
     }
 }
