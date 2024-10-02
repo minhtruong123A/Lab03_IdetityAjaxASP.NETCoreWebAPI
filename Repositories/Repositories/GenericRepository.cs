@@ -92,31 +92,21 @@ namespace Repositories.Repositories
             return _context.Set<T>().AsQueryable();
         }
 
-        public async Task<List<T>> GetAllWithParamAsync(string queryParam)
+        public async Task<List<TResult>> GetAllWithParamAsync<TResult>( string queryParam, 
+            Expression<Func<T, bool>> filter = null, Expression<Func<T, TResult>> select = null, 
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            int? skip = null,
+            int? take = null
+         )
         {
             IQueryable<T> query = _dbSet;
-            switch (queryParam.ToLower())
-            {
-                case "tracking":
-                    break;
-
-                case "notracking":
-                    query = query.AsNoTracking();
-                    break;
-
-                case "sync":
-                    return query.ToList();
-
-                case "async":
-                    return await query.ToListAsync();
-
-                case "paginated":
-                    return await query.Take(10).ToListAsync();
-
-                default:
-                    return await query.ToListAsync();
-            }
-            return await query.ToListAsync();
+            if (queryParam.ToLower() == "notracking") query =  query.AsNoTracking();
+            if (filter != null) query = query.Where(filter);
+            if (orderBy != null) query = orderBy(query);
+            if (skip.HasValue) query = query.Skip(skip.Value);
+            if (take.HasValue) query = query.Take(take.Value);
+            if (select != null) return await query.Select(select).ToListAsync();
+            else return await query.Cast<TResult>().ToListAsync();
         }
     }
 }
