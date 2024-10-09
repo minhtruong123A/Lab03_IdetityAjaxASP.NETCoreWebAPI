@@ -19,16 +19,16 @@ namespace BusinessObjects
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer(GetConnectionString());
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //=> optionsBuilder.UseSqlServer(GetConnectionString());
 
-        private string? GetConnectionString()
-        {
-            IConfiguration configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", false, true).Build();
-            return configuration["ConnectionStrings:MyStoreDB"];
-        }
+    //    private string? GetConnectionString()
+    //    {
+    //        IConfiguration configuration = new ConfigurationBuilder()
+    //                .SetBasePath(Directory.GetCurrentDirectory())
+    //                .AddJsonFile("appsettings.json", false, true).Build();
+    //        return configuration["ConnectionStrings:MyStoreDB"];
+    //    }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -102,16 +102,16 @@ namespace BusinessObjects
             });
 
             modelBuilder.Entity<User>().HasData(
-              new User { Id = 1, Username = "admin", Password = "1", RoleId = 1 },
-              new User { Id = 2, Username = "user1", Password = "password1", RoleId = 2 },
-              new User { Id = 3, Username = "user2", Password = "password2", RoleId = 2 },
-              new User { Id = 4, Username = "user3", Password = "password3", RoleId = 2 },
-              new User { Id = 5, Username = "user4", Password = "password4", RoleId = 2 },
-              new User { Id = 6, Username = "user5", Password = "password5", RoleId = 2 },
-              new User { Id = 7, Username = "user6", Password = "password6", RoleId = 2 },
-              new User { Id = 8, Username = "user7", Password = "password7", RoleId = 2 },
-              new User { Id = 9, Username = "user8", Password = "password8", RoleId = 2 },
-              new User { Id = 10, Username = "user9", Password = "password9", RoleId = 2 }
+              new User { Id = 1, Username = "admin", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 1 },
+              new User { Id = 2, Username = "user1", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 3, Username = "user2", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 4, Username = "user3", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 5, Username = "user4", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 6, Username = "user5", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 7, Username = "user6", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 8, Username = "user7", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 9, Username = "user8", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 },
+              new User { Id = 10, Username = "user9", Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", RoleId = 2 }
           );
 
             OnModelCreatingPartial(modelBuilder);

@@ -74,7 +74,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddDbContext<ProductStoreContext>();
+builder.Services.AddDbContext<ProductStoreContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));
 
 var app = builder.Build();
 
@@ -85,12 +86,8 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

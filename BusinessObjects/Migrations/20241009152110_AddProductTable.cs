@@ -129,16 +129,16 @@ namespace BusinessObjects.Migrations
                 columns: new[] { "Id", "Password", "RoleId", "Username" },
                 values: new object[,]
                 {
-                    { 1, "1", 1, "admin" },
-                    { 2, "password1", 2, "user1" },
-                    { 3, "password2", 2, "user2" },
-                    { 4, "password3", 2, "user3" },
-                    { 5, "password4", 2, "user4" },
-                    { 6, "password5", 2, "user5" },
-                    { 7, "password6", 2, "user6" },
-                    { 8, "password7", 2, "user7" },
-                    { 9, "password8", 2, "user8" },
-                    { 10, "password9", 2, "user9" }
+                    { 1, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 1, "admin" },
+                    { 2, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user1" },
+                    { 3, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user2" },
+                    { 4, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user3" },
+                    { 5, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user4" },
+                    { 6, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user5" },
+                    { 7, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user6" },
+                    { 8, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user7" },
+                    { 9, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user8" },
+                    { 10, "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5", 2, "user9" }
                 });
 
             migrationBuilder.CreateIndex(

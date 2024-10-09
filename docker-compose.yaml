@@ -1,0 +1,30 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
+    ports:
+      - 1433:1433
+    restart: always
+    networks:
+      lab3-api-networks:
+  lab3-api:
+    container_name: lab3_api
+    image: lab3-api:latest
+    build:
+      context: .
+      dockerfile: ProductManagementAPI/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - 9090:80
+    depends_on:
+      - sqlserver
+    networks:
+      lab3-api-networks:
+    
+
+networks:
+  lab3-api-networks:
+    name: lab3_api_networks

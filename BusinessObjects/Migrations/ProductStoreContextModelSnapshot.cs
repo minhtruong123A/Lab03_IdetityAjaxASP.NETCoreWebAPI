@@ -266,70 +266,70 @@ namespace BusinessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Password = "1",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 1,
                             Username = "admin"
                         },
                         new
                         {
                             Id = 2,
-                            Password = "password1",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user1"
                         },
                         new
                         {
                             Id = 3,
-                            Password = "password2",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user2"
                         },
                         new
                         {
                             Id = 4,
-                            Password = "password3",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user3"
                         },
                         new
                         {
                             Id = 5,
-                            Password = "password4",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user4"
                         },
                         new
                         {
                             Id = 6,
-                            Password = "password5",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user5"
                         },
                         new
                         {
                             Id = 7,
-                            Password = "password6",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user6"
                         },
                         new
                         {
                             Id = 8,
-                            Password = "password7",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user7"
                         },
                         new
                         {
                             Id = 9,
-                            Password = "password8",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user8"
                         },
                         new
                         {
                             Id = 10,
-                            Password = "password9",
+                            Password = "023482dbf1828b4210ff8d03af8a3dca16d769c4d17a38cb7ec0222905cd44f5",
                             RoleId = 2,
                             Username = "user9"
                         });
